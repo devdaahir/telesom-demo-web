@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Telesom 5G — Gifts</title>
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+
+    body{
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      background:#f4f4f4;
+      color:#111;
+    }
+
+    :root{
+      --green:#127a3b;
+      --light:#f7f7f7;
+      --card:#ffffff;
+      --muted:#666;
+    }
+
+    /* HEADER */
+    .top-bar{
+      background:var(--green);
+      color:#fff;
+      padding:10px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .top-bar .logo{font-weight:700;font-size:20px}
+    .top-bar a{color:#fff;text-decoration:none;font-weight:600}
+
+    .get-sim{
+      background:#fff;
+      color:var(--green);
+      border:0;
+      padding:8px 12px;
+      border-radius:20px;
+      font-weight:700;
+    }
+
+    /* CONTAINER */
+    .container{
+      max-width:960px;
+      margin:28px auto;
+      padding:0 16px;
+    }
+
+    .hero{
+      background:var(--card);
+      padding:18px;
+      border-radius:12px;
+      box-shadow:0 6px 24px rgba(0,0,0,0.06);
+      text-align:center;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .gift{
+      background:linear-gradient(180deg,#fff,#fbfff9);
+      border-radius:10px;
+      padding:18px;
+      text-align:center;
+      border:2px solid rgba(18,122,59,0.06);
+      cursor:pointer;
+      box-shadow:0 6px 12px rgba(0,0,0,0.04);
+      transition:transform .15s;
+    }
+    .gift:active{transform:translateY(2px)}
+
+    .status{
+      margin-top:14px;
+      padding:12px;
+      border-radius:10px;
+      background:#fff;
+      border:1px dashed #e6e6e6;
+      min-height:46px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#555;
+    }
+
+    .share-area,.final-area{
+      margin-top:12px;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+
+    .share-btn{
+      padding:10px 14px;
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,0.06);
+      background:#fff;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    .btn{
+      padding:12px 20px;
+      border-radius:8px;
+      background:var(--green);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      cursor:pointer;
+      border:none;
+    }
+
+    footer{
+      margin-top:22px;
+      background:var(--green);
+      color:#fff;
+      padding:20px;
+      text-align:center;
+    }
+
+    /* LOADING POPUP */
+    .loading-wrap{
+      position:fixed;
+      inset:0;
+      display:none;
+      background:rgba(0,0,0,0.45);
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+    }
+    .loading-box{
+      background:#fff;
+      padding:24px;
+      border-radius:12px;
+      font-size:20px;
+      font-weight:700;
+      color:#127a3b;
+      box-shadow:0 20px 40px rgba(0,0,0,.25);
+    }
+
+    /* WELCOME POPUP */
+    .modal-wrap{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.45);
+      z-index:9999;
+      padding:20px;
+    }
+    .modal{
+      width:420px;
+      max-width:90%;
+      background:#fff;
+      border-radius:14px;
+      padding:22px;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="top-bar">
+  <div class="logo">Telesom</div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <a href="#">Click to Gif</a>
+    <button class="get-sim">Telesom Gifts</button>
+  </div>
+</header>
+
+<!-- WELCOME MODAL -->
+<div id="welcomeModal" class="modal-wrap">
+  <div class="modal">
+    <h2>Hambalyo!</h2>
+    <p>Waxaad ka mid tahay dadka la doortay ee hela abaalmarino bilaash ah!</p>
+    <button id="startBtn" class="btn">Guulayso</button>
+  </div>
+</div>
+
+<!-- LOADING SCREEN -->
+<div id="loadingScreen" class="loading-wrap">
+  <div class="loading-box">Loading...</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="container">
+  <section class="hero" id="homeSection" style="display:none">
+
+    <h1>Ku guuleyso — Door 9 Gifts</h1>
+    <p>Taabo sanduuqyada si aad u bilowdo.</p>
+
+    <div class="grid" id="giftsGrid"></div>
+
+    <div class="status" id="statusBox">Sug... dooro gift.</div>
+
+    <div class="share-area" id="shareArea">
+      <div>Share WhatsApp 20 jeer:</div>
+      <button class="share-btn" id="whatsappShare">Share</button>
+      <div id="shareCount">0 / 20</div>
+    </div>
+
+    <div class="final-area" id="finalArea">
+      <div>Share waa la dhammeeyay ✔</div>
+      <button class="btn" id="callBtn">Garaac Lambarka</button>
+      <div>+252 638572180</div>
+    </div>
+
+  </section>
+</main>
+
+<footer>Ku guuleyso Abaalmarinta Sanadlaha</footer>
+
+<script>
+  // MODAL BUTTON
+  const modal = document.getElementById('welcomeModal');
+  const startBtn = document.getElementById('startBtn');
+  const loading = document.getElementById('loadingScreen');
+  const homeSection = document.getElementById('homeSection');
+
+  startBtn.onclick = ()=> {
+    modal.style.display = 'none';
+    loading.style.display = 'flex';
+
+    setTimeout(()=>{
+      loading.style.display = 'none';
+      homeSection.style.display = 'block';
+    }, 3000);
+  };
+
+  // GIFTS
+  const TOTAL_GIFTS = 9;
+  let clickAttempts = 0;
+  let giftLocked = false;
+
+  const giftsGrid = document.getElementById('giftsGrid');
+  const statusBox = document.getElementById('statusBox');
+
+  for(let i=1;i<=TOTAL_GIFTS;i++){
+    let box = document.createElement('div');
+    box.className = 'gift';
+    box.innerHTML = "<div style='font-size:28px'>🎁</div>Gift "+i;
+    box.onclick = onGiftClick;
+    giftsGrid.appendChild(box);
+  }
+
+  function onGiftClick(){
+    if(giftLocked) return;
+    clickAttempts++;
+
+    if(clickAttempts === 1){
+      statusBox.textContent = "Isku day mar labaad.";
+    }
+    if(clickAttempts === 2){
+      statusBox.textContent = "TUS: iPhone 16";
+    }
+    if(clickAttempts === 3){
+      statusBox.innerHTML = "<strong>Waa ku guuleysatay $50!</strong>";
+      giftLocked = true;
+      document.getElementById('shareArea').style.display = 'flex';
+    }
+  }
+
+  // SHARE
+  let shareClicks = 0;
+  const REQUIRED = 20;
+  const shareCount = document.getElementById('shareCount');
+
+  document.getElementById('whatsappShare').onclick = ()=>{
+    window.open("https://wa.me/?text=waxaan Ku guuleystay 50$ adiguna ku dhufo si aad ugu guuleysato" + encodeURIComponent("#"), "_blank");
+    shareClicks++;
+    if(shareClicks > REQUIRED) shareClicks = REQUIRED;
+
+    shareCount.textContent = shareClicks+" / "+REQUIRED;
+
+    if(shareClicks >= REQUIRED){
+      document.getElementById('shareArea').style.display = 'none';
+      document.getElementById('finalArea').style.display = 'flex';
+    }
+  };
+
+  document.getElementById('callBtn').onclick = ()=>{
+    window.location.href = "tel:+252638572180";
+  };
+</script>
+
+</body>
+</html>
